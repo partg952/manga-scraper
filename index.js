@@ -10,9 +10,9 @@ let data_arr = [];
 let ep_arr = [];
 app.get("/:page",(req,res)=>{
 const page = req.params.page;
+data_arr = [];
 requests("https://mangabuddy.com/latest?page="+page)
 .on("data",data=>{
-    data_arr = [];
     const $ = Cheerio.load(data);
     $("div.book-detailed-item").each(function(i){
         data_arr.push({
@@ -24,7 +24,7 @@ requests("https://mangabuddy.com/latest?page="+page)
 })
 res.send(data_arr);
 })
-app.get("/info",(req,res)=>{
+app.post("/info",(req,res)=>{
     const url = req.body.url
     requests(url).on("data",data=>{
         data_arr = [];
@@ -51,7 +51,7 @@ app.get("/info",(req,res)=>{
     res.send(data_arr)
 })
 
-app.get("/read",(req,res)=>{
+app.post("/read",(req,res)=>{
     const url = req.body.url;
     requests(url).on("data",data=>{
         data_arr = [];
