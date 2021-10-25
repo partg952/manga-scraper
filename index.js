@@ -16,9 +16,9 @@ requests("https://mangabuddy.com/latest?page="+page)
     const $ = Cheerio.load(data);
     $("div.latest-item").each(function(i){
         data_arr.push({
-            title:$("div.latest-item > div.inner > div.meta > div.title > h3 > a").eq(i).text(),
-            url:$("div.latest-item > div.inner > div.meta > div.title > h3 > a").eq(i).attr("href"),
-            poster:$("div.latest-item > div.inner > div.tooltip-hover > a > img").eq(i).attr("data-src")
+            title:$("div.book-detailed-item > div.meta > div.title > h3 > a").eq(i).text(),
+            url:$("div.book-detailed-item > div.meta > div.title > h3 > a").eq(i).attr("href"),
+            poster:$("div.latest-item > div.thumb > a > img").eq(i).attr("data-src")
         })
     })
 })
