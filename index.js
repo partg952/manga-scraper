@@ -18,7 +18,7 @@ requests("https://mangabuddy.com/latest?page="+page)
         data_arr.push({
             title:$("div.book-detailed-item > div.meta > div.title > h3 > a").eq(i).text(),
             url:$("div.book-detailed-item > div.meta > div.title > h3 > a").eq(i).attr("href"),
-            poster:$("div.latest-item > div.thumb > a > img").eq(i).attr("data-src")
+            poster:$("div.book-detailed-item > div.thumb > a > img").eq(i).attr("data-src")
         })
     })
 })
