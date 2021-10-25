@@ -8,8 +8,9 @@ app.use(cors());
 app.use(express.json());
 let data_arr = [];
 let ep_arr = [];
-app.get("/",(req,res)=>{
-requests("https://mangabuddy.com/")
+app.get("/:page",(req,res)=>{
+const page = req.params.page;
+requests("https://mangabuddy.com/latest?page="+page)
 .on("data",data=>{
     data_arr = [];
     const $ = Cheerio.load(data);
