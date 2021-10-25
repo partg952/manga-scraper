@@ -14,7 +14,7 @@ requests("https://mangabuddy.com/latest?page="+page)
 .on("data",data=>{
     data_arr = [];
     const $ = Cheerio.load(data);
-    $("div.latest-item").each(function(i){
+    $("div.book-detailed-item").each(function(i){
         data_arr.push({
             title:$("div.book-detailed-item > div.meta > div.title > h3 > a").eq(i).text(),
             url:$("div.book-detailed-item > div.meta > div.title > h3 > a").eq(i).attr("href"),
