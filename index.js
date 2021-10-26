@@ -62,8 +62,8 @@ app.post("/read",(req,res)=>{
     })
 })
 
-app.get("/search",(req,res)=>{
-    let keyword = req.query['q'];
+app.get("/search/:keyword",(req,res)=>{
+    let keyword = req.params.keyword;
     let data_arr = [];
     requests("https://mangabuddy.com/search?q="+keyword).on('data',data=>{
         const $ = Cheerio.load(data);
