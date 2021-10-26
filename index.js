@@ -6,13 +6,11 @@ const app = express();
 const PORT = process.env.PORT || 8080;
 app.use(cors());
 app.use(express.json());
-let data_arr = [];
-let ep_arr = [];
 app.get("/:page",(req,res)=>{
 const page = req.params.page;
+let data_arr = [];
 requests("https://mangabuddy.com/latest?page="+page)
 .on("data",data=>{
-    data_arr = [];
     const $ = Cheerio.load(data);
     $("div.book-detailed-item").each(function(i){
         data_arr.push({
@@ -21,13 +19,14 @@ requests("https://mangabuddy.com/latest?page="+page)
             poster:$("div.book-detailed-item > div.thumb > a > img").eq(i).attr("data-src")
         })
     })
+    res.send(data_arr);
 })
-res.send(data_arr);
 })
 app.post("/info",(req,res)=>{
     const url = req.body.url
+    let data_arr = [];
+    let ep_arr = [];
     requests(url).on("data",data=>{
-        data_arr = [];
         const $ = Cheerio.load(data);
         
         $("ul#chapter-list > li").each(function(i){
@@ -47,26 +46,26 @@ app.post("/info",(req,res)=>{
             episodes:ep_arr
 
         })
+        res.send(data_arr)
     })  
-    res.send(data_arr)
 })
 
 app.post("/read",(req,res)=>{
     const url = req.body.url;
+    let data_arr = [];
     requests(url).on("data",data=>{
-        data_arr = [];
         const $ = Cheerio.load(data);
         $("div.chapter-image").each(function(i){
             data_arr.push($("div.chapter-image > img").eq(i).attr("data-src"))
         })
+        res.send(data_arr);
     })
-    res.send(data_arr);
 })
 
 app.get("/search",(req,res)=>{
     let keyword = req.query['q'];
+    let data_arr = [];
     requests("https://mangabuddy.com/search?q="+keyword).on('data',data=>{
-        data_arr = [];
         const $ = Cheerio.load(data);
         $("div.book-detailed-item").each(function(i){
             data_arr.push({
@@ -77,8 +76,8 @@ app.get("/search",(req,res)=>{
 
             })
         })
+        res.send(data_arr);
     })
-    res.send(data_arr);
 })
 
 app.listen(PORT,()=>console.log('listening!!'))
